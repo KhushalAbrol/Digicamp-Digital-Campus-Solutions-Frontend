@@ -37,10 +37,15 @@ jobs:
           npm config set legacy-peer-deps true
           npm install
           npm ci 
+          
       # build and test the apps     
       - name: build
         run: |
           npm run build
+
+      - name: test
+        run: |
+         ng test --sourceMap=false --browsers=ChromeHeadless --watch=false --progress=false
 
       - name: checkout repo
         uses: actions/checkout@v2
