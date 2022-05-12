@@ -131,7 +131,7 @@ export class CouriersComponent implements OnInit {
         Swal.close();
         const dialogRef = this.dialog.open(OtpDialogComponent, { data: this.id });
         dialogRef.afterClosed().subscribe(OTP => {
-          if (this.verifyOTP(OTP)==0) {
+          if (this.verifyOTP(OTP)===true) {
             Swal.fire(
               'Success!',
               `OTP Verified`,
@@ -165,13 +165,14 @@ export class CouriersComponent implements OnInit {
     this.otp.id = this.id;
     this.otp.otp = OTP;
     this.emailAuthenticationService.sendOTP(this.otp).subscribe((res: any) => {
-//       console.log("VERIFYYYY: ", res);
-      return res;
+      console.log("VERIFYYYY: ", res);
+      if(res===0) return true;
+      return false;
     },
       (error: any) => {
         console.log(error);
       })
-    return -1;
+    return false;
   }
 
   openDialog(element: any) {
