@@ -45,7 +45,7 @@ jobs:
 
       - name: test
         run: |
-         ng test --sourceMap=false --browsers=ChromeHeadless --watch=false --progress=false
+          npm test -- --watch=false --browsers=ChromeHeadless
 
       - name: checkout repo
         uses: actions/checkout@v2
