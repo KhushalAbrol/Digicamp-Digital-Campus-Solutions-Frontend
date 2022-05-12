@@ -131,26 +131,28 @@ export class CouriersComponent implements OnInit {
         Swal.close();
         const dialogRef = this.dialog.open(OtpDialogComponent, { data: this.id });
         dialogRef.afterClosed().subscribe(OTP => {
-          if (this.verifyOTP(OTP)) {
-            Swal.fire(
-              'Success!',
-              `OTP Verified`,
-              'success'
-            )
-            element.isPicked = 1;
-            this.pkgService.updatePackage(element).subscribe((res: any) => {
-            }, (error: any) => {
-              console.log("Error in updatePackage", error);
-              this.getData();
-            })
-          } else {
-            Swal.fire(
-              'Error!',
-              `Invalid OTP!`,
-              'error'
-            )
-            this.getData();
-          }
+          var value = this.verifyOTP(OTP, element);
+          console.log("value:", value);
+          // if (value) {
+          //   Swal.fire(
+          //     'Success!',
+          //     `OTP Verified`,
+          //     'success'
+          //   )
+          //   element.isPicked = 1;
+          //   this.pkgService.updatePackage(element).subscribe((res: any) => {
+          //   }, (error: any) => {
+          //     console.log("Error in updatePackage", error);
+          //     this.getData();
+          //   })
+          // } else {
+          //   Swal.fire(
+          //     'Error!',
+          //     `Invalid OTP!`,
+          //     'error'
+          //   )
+          //   this.getData();
+          // }
           console.log(`Dialog result OTP: ${OTP}`);
         });
       }, (error: any) => {
@@ -161,17 +163,36 @@ export class CouriersComponent implements OnInit {
 
   otp: OTP = ({} as any) as OTP;
 
-  verifyOTP(OTP: any) {
+  verifyOTP(OTP: any, element: any) {
     this.otp.id = this.id;
     this.otp.otp = OTP;
     this.emailAuthenticationService.sendOTP(this.otp).subscribe((res: any) => {
       console.log("VERIFYYYY: ", res);
-      return res;
+      if (res===0) {
+        Swal.fire(
+          'Success!',
+          `OTP Verified`,
+          'success'
+        )
+        element.isPicked = 1;
+        this.pkgService.updatePackage(element).subscribe((res: any) => {
+        }, (error: any) => {
+          console.log("Error in updatePackage", error);
+          this.getData();
+        })
+      } else {
+        Swal.fire(
+          'Error!',
+          `Invalid OTP!`,
+          'error'
+        )
+        this.getData();
+      }
     },
       (error: any) => {
         console.log(error);
       })
-    return -1;
+    return false;
   }
 
   openDialog(element: any) {

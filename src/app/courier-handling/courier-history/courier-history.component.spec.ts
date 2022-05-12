@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import {MatDialogModule} from '@angular/material/dialog';
 import { CourierHistoryComponent } from './courier-history.component';
 
 describe('CourierHistoryComponent', () => {
@@ -8,7 +9,9 @@ describe('CourierHistoryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CourierHistoryComponent ]
+      declarations: [ CourierHistoryComponent ],
+      imports: [HttpClientTestingModule, MatDialogModule], 
+      providers: [CourierHistoryComponent]
     })
     .compileComponents();
   });
