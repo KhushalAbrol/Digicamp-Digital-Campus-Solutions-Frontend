@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { LostFoundComponent } from './lost-found.component';
 
 describe('LostFoundComponent', () => {
@@ -8,7 +8,9 @@ describe('LostFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LostFoundComponent ]
+      declarations: [ LostFoundComponent ],
+      imports: [HttpClientTestingModule], 
+      providers: [LostFoundComponent]
     })
     .compileComponents();
   });
