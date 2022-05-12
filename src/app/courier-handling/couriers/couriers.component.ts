@@ -131,7 +131,9 @@ export class CouriersComponent implements OnInit {
         Swal.close();
         const dialogRef = this.dialog.open(OtpDialogComponent, { data: this.id });
         dialogRef.afterClosed().subscribe(OTP => {
-          if (this.verifyOTP(OTP)===true) {
+          var value = this.verifyOTP(OTP);
+          console.log("value:", value);
+          if (value) {
             Swal.fire(
               'Success!',
               `OTP Verified`,
